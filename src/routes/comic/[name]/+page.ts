@@ -1,17 +1,14 @@
 export async function load({ fetch, params }) {
-	let result: any;
-
-	async function getData(name: string) {
-		const response = await fetch(`/api/comic/${name}`, {
+	const responseImages = await fetch(
+		`https://server.aevteam.com/comic/list-comic-image?code=${params.name}`,
+		{
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json'
 			}
-		});
+		}
+	);
 
-		result = await response.json();
-		console.log(result);
-	}
-
-	getData(params.name);
+	let images = await responseImages.json();
+	return { images };
 }
